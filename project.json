@@ -25,10 +25,11 @@
     }
   },
 
-  "buildOptions": {
-    "emitEntryPoint": true,
-    "preserveCompilationContext": true
-  },
+	"buildOptions": {
+		"emitEntryPoint": true,
+		"preserveCompilationContext": true,
+		"compile": { "exclude": "node_modules/" }
+	},
 
   "runtimeOptions": {
     "configProperties": {
