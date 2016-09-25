@@ -1,20 +1,60 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using AspNet.Security.OpenId;
+using AspNet.Security.OpenId.Steam;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace netcoretest
 {
 	public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+		public IConfiguration Configuration { get; set; }
+
+		public Startup(IHostingEnvironment env)
+		{
+			Configuration = new ConfigurationBuilder()
+				.SetBasePath(env.ContentRootPath)
+				.AddJsonFile("appsettings.json")
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+				//.AddEnvironmentVariables()
+				.Build();
+
+			// http://go.microsoft.com/fwlink/?LinkID=532709
+			//var builder = new ConfigurationBuilder()
+			//if (env.IsDevelopment())
+			//{
+			//	builder.AddUserSecrets()
+			//}
+
+			if (Configuration["SteamWebApiKey"] == null)
+				throw new ArgumentException("SteamWebApiKey is not present in appsettings file.");
+		}
+
+		// This method gets called by the runtime. Use this method to add services to the container.
+		// For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+		public void ConfigureServices(IServiceCollection services)
         {
-        }
+			services.AddAuthentication(options => {
+				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			});
+
+			services.AddAuthentication();
+			services.AddAuthorization();
+			//services.AddAuthorization(options =>
+			//{
+			//	options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+			//});
+
+			services.AddMvc();
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -56,12 +96,36 @@ namespace netcoretest
 
 			//app.UseIdentity();
 
-			//app.UseMvc(routes =>
-			//{
-			//	routes.MapRoute(
-			//		name: "default",
-			//		template: "{controller=Home}/{action=Index}/{id?}");
-			//});
+			app.UseCookieAuthentication(new CookieAuthenticationOptions
+			{
+				AutomaticAuthenticate = true,
+				AutomaticChallenge = true,
+				LoginPath = new PathString("/Account/Login"),
+				//LogoutPath = new PathString("/Account/Logout"),
+				Events = new CookieAuthenticationEvents()
+				{
+					OnValidatePrincipal = Controllers.AccountController.ValidatePrincipalAsync
+				}
+			});
+
+			app.UseSteamAuthentication(new SteamAuthenticationOptions
+			{
+				ApplicationKey = this.Configuration["SteamWebAPIKey"],
+				Events = new OpenIdAuthenticationEvents()
+				{
+					OnAuthenticated = (context) =>
+					{
+						return Task.FromResult(true);
+					}
+				}
+			});
+						
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Home}/{action=Index}/{id?}");
+			});
 		}
     }
 }

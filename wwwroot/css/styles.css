@@ -1,3 +1,11 @@
+a.steam-signin-button {
+	background: url(https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_large_border.png) no-repeat top left;
+	display: block;
+	width: 118px;
+    height: 51px;
+	text-indent: -9999px; /* hides the link text */
+}
+
 /* Master Styles */
 h1 {
   color: #1ca8dd;

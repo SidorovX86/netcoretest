@@ -1,10 +1,22 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, OnInit } from '@angular/core';
+import { InventoryItem, InventoryService } from './inventory.service'
 
 @Component({
     selector: 'sell-component',
-    template: `
-        There are items to sell.
-    `
+    templateUrl: 'app/sell.component.html'
 })
-export class SellComponent {
+
+export class SellComponent implements OnInit {
+
+    items: InventoryItem[];
+
+    constructor(private inventoryService: InventoryService) { }
+
+    ngOnInit() { this.getItems(); }
+
+    getItems() {
+
+        this.inventoryService.getItems(76561197777777777, 570)
+            .subscribe(items => this.items = items);
+    }
 }

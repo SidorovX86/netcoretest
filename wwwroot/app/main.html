@@ -17,8 +17,12 @@
 						<li><a href="#">Weapons</a></li>
 					</ul>
 				</li>
-				<li><a routerLink="/Sell" routerLinkActive="active">Sell</a></li>
-				<li><a routerLink="/About" routerLinkActive="active">About</a></li>
+				<li><a routerLink="/Sell">Sell</a></li>
+				<li><a routerLink="/About">About</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/Account/Login" class="steam-signin-button">Login</a></li>
+				<li><a href="/Account/Logout">Logout</a></li>
 			</ul>
 		</div>
 	</div>
@@ -26,7 +30,7 @@
 
 <router-outlet></router-outlet>
 
-<h1><b>Welcome to {{title}}</b></h1>
+<h1><b>Welcome to {{title}}!!!</b></h1>
 <div><label>Your name is: </label>{{name}}</div>
 <div>
 	<label>name: </label>

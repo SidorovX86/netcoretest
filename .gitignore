@@ -243,3 +243,4 @@ ModelManifest.xml
 /typings
 *.map
 *.js
+/appsettings.json
