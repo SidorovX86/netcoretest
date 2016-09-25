@@ -113,10 +113,7 @@ namespace netcoretest
 				ApplicationKey = this.Configuration["SteamWebAPIKey"],
 				Events = new OpenIdAuthenticationEvents()
 				{
-					OnAuthenticated = (context) =>
-					{
-						return Task.FromResult(true);
-					}
+					OnAuthenticated = Controllers.AccountController.OnSteamAuthenticated
 				}
 			});
 						

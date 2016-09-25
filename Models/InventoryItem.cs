@@ -7,11 +7,10 @@ namespace netcoretest.Models
 {
     public class InventoryItem
     {
-		public int Id { get; set; }
+		public ulong Id { get; set; }
+
 		public string Name { get; set; }
 
 		public string ImageUrl { get; set; }
-
-		public string BackpackUrl { get; set; }
     }
 }
