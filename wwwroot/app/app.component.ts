@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AccountService } from './services/account.service';
+import { DevExtremeModule } from 'devextreme-angular2';
 
 @Component({
     selector: 'netcoretest-app',

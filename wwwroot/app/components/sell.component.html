@@ -1,9 +1,16 @@
 ﻿<h1>Your items:</h1>
 <div class="container">
 	<div class="row">
+		<div class="btn-group" role="group" aria-label="...">
+			<button type="button" class="btn btn-default" (click)="appId=440; refresh()">Team Fortress 2</button>
+			<button type="button" class="btn btn-default" (click)="appId=730; refresh()">CS:GO</button>
+			<button type="button" class="btn btn-default" (click)="appId=570; refresh()">Dota 2</button>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-lg-3 col-md-4 col-xs-6 picture-box" *ngFor="let item of items">
 			<a class="fancybox" rel="gallery" href="{{item.BackpackUrl}}">
-				<img src="{{item.ImageUrl + '/96fx96f'}}" alt="{{item.Name}}" class="img img-responsive full-width thumbnail" />
+				<img src="{{item.ImageUrl + '/128fx128f'}}" alt="{{item.Name}}" class="img img-responsive full-width thumbnail" />
 			</a>
 		</div>
 	</div>

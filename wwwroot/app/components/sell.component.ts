@@ -1,6 +1,7 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
 import { InventoryItem, InventoryService } from '../services/inventory.service'
 import { AccountService } from '../services/account.service';
+import { DxButtonModule } from 'devextreme-angular2'
 
 @Component({
     selector: 'sell-component',
@@ -19,10 +20,10 @@ export class SellComponent implements OnInit {
 
         this.appId = 570;
 
-        this.getItems();
+        this.refresh();
     }
 
-    getItems() {
+    refresh() {
 
         var user = this.accountService.getLoggedInUser();
 
