@@ -8,6 +8,7 @@ import { DevExtremeModule } from 'devextreme-angular2';
 import { AppComponent }  from './app.component';
 import { SellComponent } from './components/sell.component';
 import { AboutComponent } from './components/about.component';
+import { AccountSettingsComponent } from './components/accountsettings.component';
 
 import { AccountService } from './services/account.service';
 import { InventoryService } from './services/inventory.service';
@@ -25,7 +26,8 @@ import { routing, appRoutingProviders  } from './app.routing';
     declarations: [
         AppComponent,
         SellComponent,
-        AboutComponent
+        AboutComponent,
+        AccountSettingsComponent
     ],
     providers: [
         appRoutingProviders, AccountService, InventoryService

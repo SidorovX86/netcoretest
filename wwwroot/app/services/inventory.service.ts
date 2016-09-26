@@ -24,7 +24,7 @@ export class InventoryService
     {
     }
 
-    getItems(steamId: number, appId: number)
+    getItems(appId: number)
     {
         return this.http.get("api/inventory/" + appId);
             //.map(response => (<Response>response));

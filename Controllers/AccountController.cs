@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
+using netcoretest.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -76,6 +77,34 @@ namespace netcoretest.Controllers
 
 				await context.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 			}
+		}
+
+		static string email = "a_sidorov@mail.ru";
+		static string tradeUrl = "https://steamcommunity.com/tradelink";
+
+		[HttpGet("api/[controller]/settings")]
+		public IActionResult GetSettings()
+		{
+			AccountSettings settings = new AccountSettings();
+
+			settings.Email = email;
+			settings.TradeUrl = tradeUrl;
+
+			return new ObjectResult(settings);
+		}
+
+		[HttpPut("api/[controller]/settings")]
+		public IActionResult SetSettings([FromBody] AccountSettings settings)
+		{
+			if (settings == null)
+			{
+				return BadRequest();
+			}
+
+			email = settings.Email;
+			tradeUrl = settings.TradeUrl;
+
+			return Ok();
 		}
 	}
 }

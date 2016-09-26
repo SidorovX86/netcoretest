@@ -30,7 +30,7 @@ export class SellComponent implements OnInit {
         if (user != null) {
 
             let self = this;
-            self.inventoryService.getItems(user.SteamId, self.appId)
+            self.inventoryService.getItems(self.appId)
                 .subscribe(res => {
 
                     var data: any = res.json();

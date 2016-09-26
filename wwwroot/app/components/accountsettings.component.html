@@ -1,0 +1,15 @@
+﻿<h1>Here is your settings:</h1>
+<div class="container">
+	<form method="post" (ngSubmit)="onSubmit()">
+		<div class="form-group">
+			<label for="email">Email:</label>
+			<input type="email" class="form-control" [(ngModel)]="model.Email" name="email"/>
+		</div>
+		<div class="form-group">
+			<label for="tradeUrl">Trade URL: <a target="_blank" href="https://steamcommunity.com/my/tradeoffers/privacy#trade_offer_access_url">get it</a></label>
+			<input type="url" class="form-control" [(ngModel)]="model.TradeUrl" name="tradeUrl">
+		</div>
+
+		<button type="submit" class="btn btn-danger">Save</button>
+	</form>
+</div>
