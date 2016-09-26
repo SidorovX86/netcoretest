@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "netcoretest";
+}
+
+@section styles
+{
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+
+    @*<link href="~/lib/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/css/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/lib/css/alertify.core.css" rel="stylesheet" />
+    <link href="~/lib/css/alertify.bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/css/alertify.default.css" rel="stylesheet" />*@
+}
+
+<div id="nav-separator"></div>
+
+<netcoretest-app>
+    <div class="loading">Loading site...</div>
+</netcoretest-app>
+
+@section scripts
+{
+    <!--<script src="~/lib/js/jquery.fancybox.pack.js"></script>
+    <script src="~/lib/js/alertify.min.js"></script>-->
+}
+
+@section customScript
+{
+    System.import('app').catch(console.log.bind(console));
+    $(document).ready(function() {
+        <!--$('.fancybox').fancybox();-->
+    });
+}

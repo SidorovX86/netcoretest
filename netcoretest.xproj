@@ -22,6 +22,7 @@
     <DnxInvisibleContent Include="wwwroot\app\app.component.js" />
     <DnxInvisibleContent Include="wwwroot\app\app.module.js" />
     <DnxInvisibleContent Include="wwwroot\app\app.routing.js" />
+    <DnxInvisibleContent Include="wwwroot\app\components\about.component.js" />
     <DnxInvisibleContent Include="wwwroot\app\inventory.service.js" />
     <DnxInvisibleContent Include="wwwroot\app\main.js" />
   </ItemGroup>

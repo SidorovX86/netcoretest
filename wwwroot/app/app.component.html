@@ -21,8 +21,23 @@
 				<li><a routerLink="/About">About</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/Account/Login" class="steam-signin-button">Login</a></li>
-				<li><a href="/Account/Logout">Logout</a></li>
+				<li *ngIf="!isUserLoggedIn()">
+					<a href="/Account/Login" class="steam-signin-button">Login</a>
+				</li>
+				<li *ngIf="isUserLoggedIn()" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{getUserName()}}<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">My Account</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Add Funds</a></li>
+						<li><a href="#">Cashout</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="/Account/Logout">Logout</a></li>
+					</ul>
+				</li>
+				<li *ngIf="isUserLoggedIn()">
+					<img src="{{getUserAvatar()}}"/>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -30,7 +45,7 @@
 
 <router-outlet></router-outlet>
 
-<h1><b>Welcome to {{title}}!!!</b></h1>
+<h1><b>Welcome to {{title}}, {{getUserName()}}!!!</b></h1>
 <div><label>Your name is: </label>{{name}}</div>
 <div>
 	<label>name: </label>

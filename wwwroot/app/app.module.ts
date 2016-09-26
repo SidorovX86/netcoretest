@@ -3,8 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }  from './app.component';
-import { SellComponent } from './sell.component';
-import { AboutComponent } from './about.component';
+import { SellComponent } from './components/sell.component';
+import { AboutComponent } from './components/about.component';
+
+import { AccountService } from './services/account.service';
 
 import { routing, appRoutingProviders  } from './app.routing';
 
@@ -20,7 +22,7 @@ import { routing, appRoutingProviders  } from './app.routing';
        AboutComponent
    ],
    providers: [
-       appRoutingProviders
+       appRoutingProviders, AccountService
    ],
   bootstrap: [ AppComponent ]
 })

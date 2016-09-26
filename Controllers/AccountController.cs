@@ -61,6 +61,7 @@ namespace netcoretest.Controllers
 			ulong steamId = player.Value<ulong>("steamid");
 
 			context.Identity.AddClaim(new Claim("SteamId", player.Value<string>("steamid"), ClaimValueTypes.UInteger64));
+			context.Identity.AddClaim(new Claim("UserInfo", player.ToString()));
 		}
 
 		public static async Task ValidatePrincipalAsync(CookieValidatePrincipalContext context)

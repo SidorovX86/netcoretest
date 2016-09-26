@@ -1,8 +1,8 @@
 ﻿import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SellComponent }   from './sell.component';
-import { AboutComponent }   from './about.component';
+import { SellComponent }   from './components/sell.component';
+import { AboutComponent }   from './components/about.component';
 
 const appRoutes: Routes = [
     { path: 'Sell', component: SellComponent },
