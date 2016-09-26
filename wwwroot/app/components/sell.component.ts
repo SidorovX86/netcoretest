@@ -1,5 +1,6 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
 import { InventoryItem, InventoryService } from '../services/inventory.service'
+import { AccountService } from '../services/account.service';
 
 @Component({
     selector: 'sell-component',
@@ -10,13 +11,37 @@ export class SellComponent implements OnInit {
 
     items: InventoryItem[];
 
-    constructor(private inventoryService: InventoryService) { }
+    appId: number;
 
-    ngOnInit() { this.getItems(); }
+    constructor(private accountService: AccountService, private inventoryService: InventoryService) { }
+
+    ngOnInit() {
+
+        this.appId = 570;
+
+        this.getItems();
+    }
 
     getItems() {
 
-        //this.inventoryService.getItems(76561197777777777, 570)
-        //    .subscribe(items => this.items = items);
+        var user = this.accountService.getLoggedInUser();
+
+        if (user != null) {
+
+            let self = this;
+            self.inventoryService.getItems(user.SteamId, self.appId)
+                .subscribe(res => {
+
+                    var data: any = res.json();
+
+                    self.items = data.map((i: any) => new InventoryItem(
+                        i.id,
+                        i.name,
+                        'https://steamcommunity-a.akamaihd.net/economy/image/' + i.imageUrl,
+                        `https://steamcommunity.com/profiles/${user.SteamId}/inventory/#${self.appId}_2_${i.id}`)
+                    );
+                }
+            );
+        }
     }
 }

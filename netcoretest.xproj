@@ -25,6 +25,8 @@
     <DnxInvisibleContent Include="wwwroot\app\components\about.component.js" />
     <DnxInvisibleContent Include="wwwroot\app\inventory.service.js" />
     <DnxInvisibleContent Include="wwwroot\app\main.js" />
+    <DnxInvisibleContent Include="wwwroot\app\services\account.service.js" />
+    <DnxInvisibleContent Include="wwwroot\app\services\inventory.service.js" />
   </ItemGroup>
   <ItemGroup>
     <DnxInvisibleFolder Include=".git\" />

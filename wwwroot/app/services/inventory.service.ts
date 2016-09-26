@@ -3,7 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 export class InventoryItem {
-    constructor(public id: number, public name: string, public imageUrl: string) { }
+
+    Id: number;
+    Name: string;
+    ImageUrl: string;
+    BackpackUrl: string;
+
+    constructor(id: number, name: string, imageUrl: string, backpackUrl: string) {
+        this.Id = id;
+        this.Name = name;
+        this.ImageUrl = imageUrl;
+        this.BackpackUrl = backpackUrl;
+    }
 }
 
 @Injectable()
@@ -13,10 +24,10 @@ export class InventoryService
     {
     }
 
-    getItems(appId: number)
+    getItems(steamId: number, appId: number)
     {
         return this.http.get("api/inventory/" + appId);
-          //  .map(response => (<Response>response));
+            //.map(response => (<Response>response));
     }
 
     private extractData(res: Response)
