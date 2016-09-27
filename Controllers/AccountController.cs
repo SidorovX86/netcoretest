@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using netcoretest.Models;
+using netcoretest.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,11 +20,12 @@ namespace netcoretest.Controllers
 	[Authorize]
 	public class AccountController : Controller
     {
-		//[HttpGet]
-		//public IActionResult Login(string returnUrl)
-		//{
-		//	return View();
-		//}
+		private readonly SteamPalDbContext dbContext;
+
+		public AccountController(SteamPalDbContext dbContext)
+		{
+			this.dbContext = dbContext;
+		}
 
 		[HttpGet]
 		[HttpPost]
@@ -83,26 +87,47 @@ namespace netcoretest.Controllers
 		static string tradeUrl = "https://steamcommunity.com/tradelink";
 
 		[HttpGet("api/[controller]/settings")]
-		public IActionResult GetSettings()
+		public async Task<IActionResult> GetSettings()
 		{
+			ulong steamId = UInt64.Parse(HttpContext.User.FindFirstValue("SteamId"));
+
+			Account account = await this.dbContext.Accounts.AsNoTracking().SingleOrDefaultAsync(a => a.SteamId == steamId);
+
+			if (account == null)
+			{
+				return NotFound();
+			}
+
 			AccountSettings settings = new AccountSettings();
 
-			settings.Email = email;
-			settings.TradeUrl = tradeUrl;
+			settings.Email = account.Email;
+			settings.TradeUrl = account.TradeUrl;
 
 			return new ObjectResult(settings);
 		}
 
 		[HttpPut("api/[controller]/settings")]
-		public IActionResult SetSettings([FromBody] AccountSettings settings)
+		//[ValidateAntiForgeryToken] // https://stackoverflow.com/questions/36628666/validateantiforgerytoken-in-ajax-request-with-aspnet-core-mvc
+		public async Task<IActionResult> SetSettings([FromBody] AccountSettings settings)
 		{
 			if (settings == null)
 			{
 				return BadRequest();
 			}
 
-			email = settings.Email;
-			tradeUrl = settings.TradeUrl;
+			ulong steamId = UInt64.Parse(HttpContext.User.FindFirstValue("SteamId"));
+
+			Account account = await this.dbContext.Accounts.SingleOrDefaultAsync(a => a.SteamId == steamId);
+
+			if (account == null)
+			{
+				return NotFound();
+			}
+
+			account.Email = settings.Email;
+			account.TradeUrl = settings.TradeUrl;
+
+			await this.dbContext.SaveChangesAsync();
 
 			return Ok();
 		}

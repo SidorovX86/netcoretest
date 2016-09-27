@@ -11,6 +11,8 @@ using AspNet.Security.OpenId.Steam;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using netcoretest.Data;
 
 namespace netcoretest
 {
@@ -42,7 +44,8 @@ namespace netcoretest
 		// For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
         {
-			services.AddAuthentication(options => {
+			services.AddAuthentication(options =>
+			{
 				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 			});
 
@@ -53,11 +56,16 @@ namespace netcoretest
 			//	options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 			//});
 
+			services.AddDbContext<Data.SteamPalDbContext>(options =>
+			{
+				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+			});
+
 			services.AddMvc();
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, SteamPalDbContext dbContext)
         {
             loggerFactory.AddConsole();
 
